@@ -1,7 +1,11 @@
-import json
+"""
+This module provides functions to translate text between English and French
+using the IBM Watson Language Translator API
+"""
+
+import os
 from ibm_watson import LanguageTranslatorV3
 from ibm_cloud_sdk_core.authenticators import IAMAuthenticator
-import os
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -9,12 +13,13 @@ load_dotenv()
 API_KEY = os.getenv('apikey')
 URL = os.getenv('url')
 
+
 def english_to_french(english_text):
     """
     Translates English text to French using IBM Watson Language Translator API
     """
-    if english_text is None:
-        return None
+    if not english_text:
+        return "Error: No text to translate"
     else:
         authenticator = IAMAuthenticator(API_KEY)
         translator = LanguageTranslatorV3(
@@ -32,12 +37,13 @@ def english_to_french(english_text):
         french_text = translation['translations'][0]['translation']
         return french_text
 
+
 def french_to_english(french_text):
     """
     Translates French text to English using IBM Watson Language Translator API
     """
-    if french_text is None:
-        return None
+    if not french_text:
+        return "Error: No text to translate"
     else:
         authenticator = IAMAuthenticator(API_KEY)
         translator = LanguageTranslatorV3(
